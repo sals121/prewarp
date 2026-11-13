@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you use PreWarp, please cite it as below, and cite the NIST AM-Bench data it was validated on."
+title: "PreWarp: inherent-strain distortion prediction and compensation for metal LPBF parts"
+type: software
+authors:
+  - given-names: Albert
+    family-names: Salsench Virgili
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/sals121/prewarp"
+url: "https://github.com/sals121/prewarp"
+abstract: >-
+  Predicts and pre-compensates the distortion of metal laser powder bed fusion (LPBF/SLM) parts
+  with an inherent-strain finite element model, validated against the NIST AM-Bench 2018 and 2022
+  bridge measurements, with an MCP server and a Claude agent on top.
+keywords:
+  - additive manufacturing
+  - LPBF
+  - distortion
+  - inherent strain
+  - finite element method
+  - NIST AM-Bench
+references:
+  - type: data
+    title: "AM Bench 2022 3D Build Modeling Challenge Description Data (AMB2022-01)"
+    authors:
+      - name: "National Institute of Standards and Technology"
+    doi: 10.18434/mds2-2607
+    year: 2022
+  - type: data
+    title: "AM Bench 2022 Residual Elastic Strain, Residual Stress, and Part Deflection Measurements for IN718 3D Builds"
+    authors:
+      - name: "National Institute of Standards and Technology"
+    doi: 10.18434/mds2-2711
+    year: 2022
+  - type: data
+    title: "AM Bench 2018 Residual Elastic Strain Measurements of 3D Additive Manufacturing Builds of IN625 Artifacts Using Neutron Diffraction and Synchrotron X-ray Diffraction"
+    authors:
+      - name: "National Institute of Standards and Technology"
+    doi: 10.18434/mds2-3052
+    year: 2023
+  - type: article
+    title: "Elastic residual strain and stress measurements and corresponding part deflections of 3D additive manufacturing builds of IN625 AM-Bench artifacts using neutron diffraction, synchrotron X-ray diffraction, and contour method"
+    authors:
+      - family-names: Phan
+        given-names: Thien Q.
+    journal: "Integrating Materials and Manufacturing Innovation"
+    volume: 8
+    start: 318
+    end: 334
+    year: 2019
+    doi: 10.1007/s40192-019-00149-0

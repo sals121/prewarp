@@ -20,6 +20,11 @@ dependencies = [
     "trimesh>=5.2.1",
 ]
 
+[project.urls]
+Homepage = "https://github.com/sals121/prewarp"
+Repository = "https://github.com/sals121/prewarp"
+Issues = "https://github.com/sals121/prewarp/issues"
+
 [project.scripts]
 prewarp = "prewarp.cli:main"
 prewarp-mcp = "prewarp.mcp_server:main"
