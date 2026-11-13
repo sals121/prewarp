@@ -177,9 +177,13 @@ def test_paths_outside_the_allowed_dirs_are_never_resolved(parts, monkeypatch):
     outside.mkdir()
     trimesh.creation.box(extents=(1, 1, 1)).export(outside / "x.stl")
     touched = _forbid_fs_outside(monkeypatch, parts)
-    for bad in [outside / "x.stl", parts / ".." / "elsewhere" / "x.stl", "Z:/share/x.stl"]:
+    for bad in [outside / "x.stl", parts / ".." / "elsewhere" / "x.stl"]:
         with pytest.raises(ValueError, match="outside the allowed"):
             checked_stl_path(str(bad))
+    # A mapped network drive is outside on Windows; on POSIX "Z:" is a name containing ':'.
+    win = sys.platform == "win32"
+    with pytest.raises(ValueError, match="outside the allowed" if win else "':' inside"):
+        checked_stl_path("Z:/share/x.stl")
     assert touched == []
 
 
@@ -188,10 +192,10 @@ def test_link_to_a_network_path_is_refused_without_following(parts, monkeypatch)
     link = str(parts / "net")
     real_islink = os.path.islink
     monkeypatch.setattr(os.path, "islink", lambda p: os.fspath(p) == link or real_islink(p))
-    monkeypatch.setattr(os, "readlink", lambda p: r"\evil-host\share")
+    monkeypatch.setattr(os, "readlink", lambda p: r"\\evil-host\share")  # UNC
     followed = []
     monkeypatch.setattr(os.path, "lexists", lambda p: followed.append(p) or True)
-    with pytest.raises(ValueError, match="links to"):
+    with pytest.raises(ValueError, match="links to .*UNC"):
         checked_stl_path(str(parts / "net" / "x.stl"))
     assert followed == []
 
