@@ -154,3 +154,77 @@ def test_defaults_allow_the_validated_nist_runs():
     # 0.5 mm bridges (~29.5k elements) must pass with default limits.
     limits.check_elements(29_500, 0.5)
     limits.check_grid(np.array([[0, 0, 0], [75, 10, 12.5]]), 0.5)
+
+
+def _forbid_fs_outside(monkeypatch, allowed: Path) -> list:
+    """Record any filesystem probe of a path outside ``allowed``."""
+    touched = []
+    for mod, name in [(os.path, "realpath"), (os.path, "lexists"), (os.path, "islink"),
+                      (os.path, "isjunction"), (os, "lstat"), (os, "readlink"), (os, "stat")]:
+        orig = getattr(mod, name)
+
+        def probe(p, *a, _orig=orig, **k):
+            if not os.path.abspath(p).lower().startswith(os.path.abspath(allowed).lower()):
+                touched.append(str(p))
+            return _orig(p, *a, **k)
+
+        monkeypatch.setattr(mod, name, probe)
+    return touched
+
+
+def test_paths_outside_the_allowed_dirs_are_never_resolved(parts, monkeypatch):
+    outside = parts.parent / "elsewhere"
+    outside.mkdir()
+    trimesh.creation.box(extents=(1, 1, 1)).export(outside / "x.stl")
+    touched = _forbid_fs_outside(monkeypatch, parts)
+    for bad in [outside / "x.stl", parts / ".." / "elsewhere" / "x.stl", "Z:/share/x.stl"]:
+        with pytest.raises(ValueError, match="outside the allowed"):
+            checked_stl_path(str(bad))
+    assert touched == []
+
+
+def test_link_to_a_network_path_is_refused_without_following(parts, monkeypatch):
+    (parts / "net").mkdir()
+    link = str(parts / "net")
+    real_islink = os.path.islink
+    monkeypatch.setattr(os.path, "islink", lambda p: os.fspath(p) == link or real_islink(p))
+    monkeypatch.setattr(os, "readlink", lambda p: r"\evil-host\share")
+    followed = []
+    monkeypatch.setattr(os.path, "lexists", lambda p: followed.append(p) or True)
+    with pytest.raises(ValueError, match="links to"):
+        checked_stl_path(str(parts / "net" / "x.stl"))
+    assert followed == []
+
+
+def test_link_inside_the_allowed_dir_is_followed(parts):
+    real = parts / "real"
+    real.mkdir()
+    trimesh.creation.box(extents=(1, 1, 1)).export(real / "x.stl")
+    _link_dir(parts / "alias", real)
+    assert checked_stl_path(str(parts / "alias" / "x.stl")) == os.path.realpath(real / "x.stl")
+
+
+def test_triangle_limit(parts, monkeypatch):
+    monkeypatch.setenv("PREWARP_MAX_TRIANGLES", "5")  # a box has 12
+    with pytest.raises(limits.ResourceLimitError, match="12 triangles"):
+        service.analyze_part(str(parts / "part.stl"), render=False)
+
+
+def test_subdivision_estimate_matches_trimesh():
+    from trimesh.remesh import subdivide_to_size
+
+    surf = trimesh.creation.box(extents=(10, 3, 7))
+    for pitch in (4.0, 1.0, 0.3):
+        _, faces = subdivide_to_size(surf.vertices, surf.faces, max_edge=pitch / 2, max_iter=10)
+        est = limits.subdivided_triangles(surf, pitch)
+        assert len(faces) <= est <= 4 * len(faces)
+
+
+def test_open_surface_subdivision_is_capped_before_voxelising(parts, monkeypatch):
+    sheet = trimesh.Trimesh([[0, 0, 0], [100, 0, 0], [0, 100, 5]], [[0, 1, 2]])
+    assert not sheet.is_watertight
+    monkeypatch.setenv("PREWARP_MAX_TRIANGLES", "100000")
+    monkeypatch.setenv("PREWARP_MAX_GRID_CELLS", "1e12")  # isolate the subdivision check
+    monkeypatch.setattr(service, "mesh_from_stl", lambda *a: pytest.fail("voxelised"))
+    with pytest.raises(limits.ResourceLimitError, match="not watertight"):
+        service._mesh(sheet, 0.05)  # 4**10 subdivided triangles

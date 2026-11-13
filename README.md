@@ -207,7 +207,7 @@ uv sync
 uv run prewarp analyze data/nist/AMB2022-01-AMMT-PartCAD.STL -m IN718
 uv run prewarp orient my_bracket.stl -m Ti6Al4V      # rank build orientations
 uv run prewarp compensate my_bracket.stl -m Ti6Al4V
-uv run pytest -q                                      # 59 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
+uv run pytest -q                                      # 65 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
 ```
 
 ## LLM layer: an engineer you can talk to, that can't make numbers up
@@ -225,20 +225,7 @@ or in Claude Desktop's `claude_desktop_config.json`:
                               "env": { "PREWARP_ALLOWED_DIRS": "/path/to/parts" } } } }
 ```
 
-The model can only open `.stl` files inside `PREWARP_ALLOWED_DIRS` (default: the working
-directory). Remote and UNC paths are rejected, so a prompt-injected request cannot read other
-files or make the machine authenticate to a remote share. Use `os.pathsep` to list several
-folders. The path is checked as text first (no UNC, `\?\` or `\.\` prefixes, drive-relative
-paths, alternate data streams or device names such as `NUL`), then resolved through symlinks
-and junctions and compared folder by folder, case-insensitively on Windows. The CLI is not
-restricted.
-
-Every entry point (CLI, MCP, agent) also enforces resource limits before loading, voxelising
-and simulating, because solver memory grows faster than linearly with the element count
-(about 20 GB at 234k elements): `PREWARP_MAX_STL_MB` (default 100), `PREWARP_MAX_ELEMENTS`
-(default 100 000, roughly 8 GB) and `PREWARP_MAX_GRID_CELLS` (default 20 × the element
-limit, checked before the voxel grid is allocated). A part over a limit fails with an error
-that names the variable to raise.
+The model can only open `.stl` files inside `PREWARP_ALLOWED_DIRS` (see *Security*).
 
 Tools: `analyze_part`, `compensate_part`, `rank_orientations`, `list_materials`, `nist_validation`.
 Then just ask: *"This IN718 bracket warps at the tip. Which orientation is best, and give me a
@@ -329,6 +316,49 @@ What it shows:
 
 [`scripts/mesh_convergence.py`](scripts/mesh_convergence.py) reproduces this (resumable).
 Results are in [`docs/results/mesh_convergence.json`](docs/results/mesh_convergence.json).
+
+## Security
+
+The MCP server and the agent take file paths from a language model, and a model can be
+steered by text it reads (prompt injection). PreWarp therefore treats those paths as untrusted.
+
+**What the path validation protects** (MCP and agent; the CLI is not restricted, there you
+type the path):
+
+- The model can only open existing `.stl` files inside `PREWARP_ALLOWED_DIRS`
+  (`os.pathsep`-separated; default: the working directory). It cannot read other files.
+- Network and device paths are refused on the text alone, before anything touches the
+  filesystem: UNC (`\\host\share`, `//host`), `\\?\` and `\\.\` prefixes, URLs, drive- and
+  root-relative paths (`C:part.stl`, `\part.stl`), alternate data streams (`a.txt:b.stl`) and
+  device names (`NUL`, `CON`, `COM1`…). Even resolving a UNC path makes Windows authenticate
+  to the remote host and can leak the user's NTLM hash.
+- The path is then made absolute without touching the disk and must already lie inside an
+  allowed folder, compared folder by folder and case-insensitively on Windows, so `C:\parts`
+  does not admit `C:\parts-other\x.stl`. Nothing outside is ever resolved: even resolving a
+  mapped network drive (`Z:\x.stl`) would contact its server.
+- Inside the allowed folder the path is walked one folder at a time. A symlink or junction
+  is followed only after its target, read without following it, passes the same checks, so a
+  link to a network share or to a folder outside is refused.
+
+**Resource limits** (every entry point, checked before loading, voxelising and simulating).
+Solver memory grows faster than linearly with the element count, about 20 GB at 234k
+elements, so a huge STL or a tiny voxel pitch could exhaust the machine:
+
+| Variable | Default | Limits |
+|---|---|---|
+| `PREWARP_MAX_STL_MB` | 100 | STL file size |
+| `PREWARP_MAX_ELEMENTS` | 100 000 (≈ 8 GB) | hexahedral elements |
+| `PREWARP_MAX_GRID_CELLS` | 20 × element limit | voxel grid, checked before it is allocated |
+| `PREWARP_MAX_TRIANGLES` | 2 000 000 | STL triangles, and the triangles a non-watertight STL is subdivided into before voxelising |
+
+A part over a limit fails with an error that names the variable to raise.
+
+**Remaining risk (requires local access):** someone who can write to an allowed folder could
+swap a folder for a link pointing to a network path between the check and the moment the STL
+is opened (a race). The allowed folders themselves come from your configuration and are
+trusted, so do not point `PREWARP_ALLOWED_DIRS` at a network share. Both need local write
+access to the machine, which is outside what this validation defends against. Keep
+`PREWARP_ALLOWED_DIRS` to folders only you write to.
 
 ## Limitations
 

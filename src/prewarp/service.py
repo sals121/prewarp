@@ -17,7 +17,7 @@ import numpy as np
 
 from .compensate import DistortionModel, best_fit_rigid, compensate, morph_surface
 from .geometry import load_stl, mesh_from_stl, orient
-from .limits import ResourceLimitError, check_elements, check_grid, check_stl_size
+from .limits import ResourceLimitError, check_elements, check_grid, check_stl_size, check_surface
 from .materials import MATERIALS, get_material
 from .simulate import release, simulate_build, summarize
 
@@ -37,6 +37,7 @@ def _load_part(stl_path: str):
 
 def _mesh(surface, pitch: float):
     """Voxelise within the configured memory limits (checked before allocating)."""
+    check_surface(surface, pitch)
     check_grid(surface.bounds, pitch)
     mesh, _ = mesh_from_stl(surface, pitch)
     check_elements(mesh.n_elems, pitch)
