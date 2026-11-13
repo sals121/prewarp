@@ -1,0 +1,18 @@
+# AM Bench 2018 CHAL-AMB2018-01-PD, part AMB2018-01-625-CBM-B1-P3 (IN625, EOS M270-based CBM), as-built.
+# Source: values as printed on Fig.16 of Phan et al. 2019, IMMI 8:318-334, doi:10.1007/s40192-019-00149-0 (CC BY 4.0),
+#         identical to labels on https://www.nist.gov/ambench/chal-amb2018-01-pd Fig.2. Not a NIST raw file (none published).
+# x_mm = CMM X of tab (ridge) centre = same frame as AMB2018_01_Part.STL (x=0 free square end, taper/attached block at x=56..75).
+# tab numbering per Phan Fig.9: tab 11 at x=0.5 (free end), tab 1 at x=70.5 (taper end).
+# deflection = z_after_EDM - z_before, mean of 3 points across ridge; std = statistical only (CMM MPE 0.005 mm not included).
+tab,x_mm,deflection_mm,std_mm
+11,0.5,1.276,0.002
+10,7.5,0.997,0.001
+9,14.5,0.754,0.002
+8,21.5,0.551,0.003
+7,28.5,0.387,0.003
+6,35.5,0.250,0.001
+5,42.5,0.146,0.000
+4,49.5,0.065,0.000
+3,56.5,0.012,0.001
+2,63.5,0.000,0.001
+1,70.5,0.003,0.001

@@ -1,0 +1,440 @@
+{
+  "protocol": "Inherent strain calibrated on part deflection only (materials.py), eps_z = eps_xy; no refit. Model state: as built, on a rigid plate (the measured parts were still attached to their build-plate section). Model elastic strain averaged over each diffraction gauge volume, material only. Gauges with < 90 % of their volume inside the CAD solid are excluded.",
+  "pitch_mm": 0.5,
+  "datasets": {
+    "AMB2022-EDD": {
+      "technique": "synchrotron energy-dispersive X-ray diffraction (CHESS ID1A3), part B7-P3",
+      "source": "NIST mds2-2711, AMB2022_EDD_results_V2.txt (sha256 ce098ee2...); uncertainty 1e-4 from AMB2022-01-RS-PD measurement results v1.1, p.2",
+      "gauge": "assumed equal to the 2018 CHESS ID1A3 set-up (0.25 x 1.5 x 0.25 mm); the 2022 data document does not state it",
+      "material": "IN718",
+      "eps_xy": -0.00529,
+      "eps_z": -0.00529,
+      "points_in_file": 2248,
+      "points_compared": 2088,
+      "points_model_above_yield": 1596,
+      "components": {
+        "xx": {
+          "all": {
+            "n": 2088,
+            "rms_error_ue": 2142.4104438074414,
+            "bias_ue": 1554.2853117593481,
+            "measured_std_ue": 1103.5395857131778,
+            "pearson_r": 0.7899632678332766,
+            "slope_pred_vs_meas": 1.5618475499581068,
+            "skill": -2.769029358173679
+          },
+          "near_plate_z<2mm": {
+            "n": 332,
+            "rms_error_ue": 2490.8187724061972,
+            "bias_ue": 1826.1885347278019,
+            "measured_std_ue": 1062.076387781884,
+            "pearson_r": 0.6878380571268896,
+            "slope_pred_vs_meas": 1.4499326480169543,
+            "skill": -4.500127448593205
+          },
+          "away_from_plate": {
+            "n": 1756,
+            "rms_error_ue": 2069.9568971188205,
+            "bias_ue": 1502.8776409019865,
+            "measured_std_ue": 1105.3780655659245,
+            "pearson_r": 0.8143642082925506,
+            "slope_pred_vs_meas": 1.5993118587424744,
+            "skill": -2.5067186208100107
+          },
+          "model_below_yield": {
+            "n": 492,
+            "rms_error_ue": 996.6939514374824,
+            "bias_ue": 571.1660837847718,
+            "measured_std_ue": 971.8444623898233,
+            "pearson_r": 0.7312261501896063,
+            "slope_pred_vs_meas": 0.8937208709890304,
+            "skill": -0.05179261374123745
+          }
+        },
+        "zz": {
+          "all": {
+            "n": 2088,
+            "rms_error_ue": 2224.8719569953632,
+            "bias_ue": -1277.4063387537399,
+            "measured_std_ue": 1531.573988022914,
+            "pearson_r": 0.8436340973206319,
+            "slope_pred_vs_meas": 1.6070575963195919,
+            "skill": -1.1102508342178785
+          },
+          "near_plate_z<2mm": {
+            "n": 332,
+            "rms_error_ue": 4297.499704179214,
+            "bias_ue": -2802.930687385269,
+            "measured_std_ue": 2240.9478662529573,
+            "pearson_r": 0.8816954225454547,
+            "slope_pred_vs_meas": 1.9897003856267585,
+            "skill": -2.677631449093063
+          },
+          "away_from_plate": {
+            "n": 1756,
+            "rms_error_ue": 1547.312329044994,
+            "bias_ue": -988.9814619054097,
+            "measured_std_ue": 1355.539562442014,
+            "pearson_r": 0.8813341395762204,
+            "slope_pred_vs_meas": 1.4288281055286987,
+            "skill": -0.302961482268413
+          },
+          "model_below_yield": {
+            "n": 492,
+            "rms_error_ue": 1183.733171542509,
+            "bias_ue": -466.3546144725771,
+            "measured_std_ue": 1445.9860872329925,
+            "pearson_r": 0.7408571114694853,
+            "slope_pred_vs_meas": 0.8001210447346605,
+            "skill": 0.32983860389029485
+          }
+        }
+      },
+      "d0_offset_test": {
+        "note": "best uniform strain offset (what a d0 error would produce), removed from all components; the bias left over cannot come from d0",
+        "best_common_offset_ue": 138.43948650280387,
+        "stated_total_uncertainty_ue": 100.0,
+        "after_removing_offset": {
+          "xx": {
+            "n": 2088,
+            "rms_error_ue": 2044.1964387701905,
+            "bias_ue": 1415.8458252565438,
+            "measured_std_ue": 1103.5395857131778,
+            "pearson_r": 0.7899632678332766,
+            "slope_pred_vs_meas": 1.5618475499581068,
+            "skill": -2.431384787067872
+          },
+          "zz": {
+            "n": 2088,
+            "rms_error_ue": 2307.142750597051,
+            "bias_ue": -1415.8458252565438,
+            "measured_std_ue": 1531.573988022914,
+            "pearson_r": 0.8436340973206319,
+            "slope_pred_vs_meas": 1.6070575963195908,
+            "skill": -1.2692010177466186
+          }
+        }
+      },
+      "diagnostic_strain_fit": {
+        "note": "least-squares eps_xy fitted to these strains, only to locate the model error; not used anywhere",
+        "eps_xy_from_strains": -0.002410446235949247,
+        "eps_xy_from_deflection": -0.00529,
+        "ratio": 0.45566091416809956,
+        "rms_error_ue_after_fit": 922.4455318736324,
+        "eps_z_sensitivity_vs_eps_xy": 1.3535923423395362e-15
+      }
+    },
+    "AMB2018-EDD": {
+      "technique": "synchrotron energy-dispersive X-ray diffraction (CHESS ID1A3)",
+      "source": "NIST mds2-3052, IN625_EDXRD_Strain_Results.txt (sha256 a73629ed...); uncertainty not stated in the file, 1e-4 assumed as for 2022",
+      "gauge": "0.25 x 1.5 x 0.25 mm (mds2-3052, X-ray Diffraction Residual Strain Measurements.pdf)",
+      "material": "IN625",
+      "eps_xy": -0.00374,
+      "eps_z": -0.00374,
+      "points_in_file": 2196,
+      "points_compared": 2125,
+      "points_model_above_yield": 1443,
+      "components": {
+        "xx": {
+          "all": {
+            "n": 2125,
+            "rms_error_ue": 1615.104699075694,
+            "bias_ue": 1272.8766929400053,
+            "measured_std_ue": 907.9598400194421,
+            "pearson_r": 0.7928143019024119,
+            "slope_pred_vs_meas": 1.3497267158880764,
+            "skill": -2.1642302791238275
+          },
+          "near_plate_z<2mm": {
+            "n": 343,
+            "rms_error_ue": 1786.273927001867,
+            "bias_ue": 1403.4432807806286,
+            "measured_std_ue": 832.884349795138,
+            "pearson_r": 0.7809916784405938,
+            "slope_pred_vs_meas": 1.5241618265912467,
+            "skill": -3.599670428810154
+          },
+          "away_from_plate": {
+            "n": 1782,
+            "rms_error_ue": 1580.0313093707189,
+            "bias_ue": 1247.7451892198403,
+            "measured_std_ue": 919.8653038724167,
+            "pearson_r": 0.7983984015064393,
+            "slope_pred_vs_meas": 1.3279115709607392,
+            "skill": -1.9504136556752862
+          },
+          "model_below_yield": {
+            "n": 682,
+            "rms_error_ue": 1157.0437052091524,
+            "bias_ue": 819.8048237458627,
+            "measured_std_ue": 816.6047691226444,
+            "pearson_r": 0.6339700206376198,
+            "slope_pred_vs_meas": 0.8037061158960519,
+            "skill": -1.0075931444234585
+          }
+        },
+        "zz": {
+          "all": {
+            "n": 2125,
+            "rms_error_ue": 1514.8217268974774,
+            "bias_ue": -932.9504242706299,
+            "measured_std_ue": 1216.5267242806474,
+            "pearson_r": 0.87912607913807,
+            "slope_pred_vs_meas": 1.5266898034396033,
+            "skill": -0.5505284645627124
+          },
+          "near_plate_z<2mm": {
+            "n": 343,
+            "rms_error_ue": 2855.951353992103,
+            "bias_ue": -1921.2860464534435,
+            "measured_std_ue": 1754.0520093696082,
+            "pearson_r": 0.9250359013417792,
+            "slope_pred_vs_meas": 1.913214509433222,
+            "skill": -1.6510424290029961
+          },
+          "away_from_plate": {
+            "n": 1782,
+            "rms_error_ue": 1080.0039998215705,
+            "bias_ue": -742.7152287550828,
+            "measured_std_ue": 1082.2374022976378,
+            "pearson_r": 0.8963294177010046,
+            "slope_pred_vs_meas": 1.3169855310616323,
+            "skill": 0.004123121130691798
+          },
+          "model_below_yield": {
+            "n": 682,
+            "rms_error_ue": 795.4666192597455,
+            "bias_ue": -383.91944170813576,
+            "measured_std_ue": 1039.0907813263193,
+            "pearson_r": 0.8415032457004242,
+            "slope_pred_vs_meas": 1.0422670420897788,
+            "skill": 0.41394694279174993
+          }
+        }
+      },
+      "d0_offset_test": {
+        "note": "best uniform strain offset (what a d0 error would produce), removed from all components; the bias left over cannot come from d0",
+        "best_common_offset_ue": 169.96313433468765,
+        "stated_total_uncertainty_ue": 100.0,
+        "after_removing_offset": {
+          "xx": {
+            "n": 2125,
+            "rms_error_ue": 1484.8455917373863,
+            "bias_ue": 1102.9135586053176,
+            "measured_std_ue": 907.9598400194421,
+            "pearson_r": 0.7928143019024119,
+            "slope_pred_vs_meas": 1.3497267158880768,
+            "skill": -1.6744181355480134
+          },
+          "zz": {
+            "n": 2125,
+            "rms_error_ue": 1625.0251345408024,
+            "bias_ue": -1102.9135586053176,
+            "measured_std_ue": 1216.5267242806474,
+            "pearson_r": 0.8791260791380697,
+            "slope_pred_vs_meas": 1.5266898034396017,
+            "skill": -0.7843369038899015
+          }
+        }
+      },
+      "diagnostic_strain_fit": {
+        "note": "least-squares eps_xy fitted to these strains, only to locate the model error; not used anywhere",
+        "eps_xy_from_strains": -0.001771332864614803,
+        "eps_xy_from_deflection": -0.00374,
+        "ratio": 0.47361841299861046,
+        "rms_error_ue_after_fit": 744.8394396874733,
+        "eps_z_sensitivity_vs_eps_xy": 1.2733956420215118e-15
+      }
+    },
+    "AMB2018-ND": {
+      "technique": "neutron diffraction (NIST NCNR BT8)",
+      "source": "NIST mds2-3052, IN625_Neutron_Strain_Results.txt (sha256 f59501ef...); uncertainty not stated in the file, 1e-4 assumed",
+      "gauge": "~1.5 mm cube (mds2-3052, Neutron Diffraction Residual Strain Measurements.pdf)",
+      "material": "IN625",
+      "eps_xy": -0.00374,
+      "eps_z": -0.00374,
+      "points_in_file": 204,
+      "points_compared": 204,
+      "points_model_above_yield": 190,
+      "components": {
+        "yy": {
+          "all": {
+            "n": 204,
+            "rms_error_ue": 674.3176260878017,
+            "bias_ue": -180.70518716762024,
+            "measured_std_ue": 535.3038725084737,
+            "pearson_r": 0.6746615934545083,
+            "slope_pred_vs_meas": 1.1051001265724494,
+            "skill": -0.5868221479167057
+          },
+          "near_plate_z<2mm": {
+            "n": 15,
+            "rms_error_ue": 1048.310751056872,
+            "bias_ue": 978.7682234725348,
+            "measured_std_ue": 341.4598463460479,
+            "pearson_r": 0.3834629268676777,
+            "slope_pred_vs_meas": 0.37586778881544713,
+            "skill": -8.425421883624653
+          },
+          "away_from_plate": {
+            "n": 189,
+            "rms_error_ue": 635.2741263582589,
+            "bias_ue": -272.72688642477544,
+            "measured_std_ue": 514.1783064136574,
+            "pearson_r": 0.630273259016117,
+            "slope_pred_vs_meas": 0.902407293025959,
+            "skill": -0.5264930674413506
+          },
+          "model_below_yield": {
+            "n": 14,
+            "rms_error_ue": 519.8956152289364,
+            "bias_ue": -371.08119025751813,
+            "measured_std_ue": 360.9908289637264,
+            "pearson_r": 0.3880953235132978,
+            "slope_pred_vs_meas": 0.3097285778068556,
+            "skill": -1.074149097333302
+          }
+        },
+        "xx": {
+          "all": {
+            "n": 204,
+            "rms_error_ue": 1862.4463057509604,
+            "bias_ue": 1577.0864312477147,
+            "measured_std_ue": 611.1548627015878,
+            "pearson_r": 0.6920521298302467,
+            "slope_pred_vs_meas": 1.4834185347344224,
+            "skill": -8.286776176354914
+          },
+          "near_plate_z<2mm": {
+            "n": 15,
+            "rms_error_ue": 1901.9024298356435,
+            "bias_ue": 1774.95640198618,
+            "measured_std_ue": 231.61800384445266,
+            "pearson_r": 0.7784046438470473,
+            "slope_pred_vs_meas": 2.849361682074943,
+            "skill": -66.42668956664951
+          },
+          "away_from_plate": {
+            "n": 189,
+            "rms_error_ue": 1859.279004224673,
+            "bias_ue": 1561.3824653160905,
+            "measured_std_ue": 590.333032061358,
+            "pearson_r": 0.6988850340198716,
+            "slope_pred_vs_meas": 1.5739568689438879,
+            "skill": -8.919618285751573
+          },
+          "model_below_yield": {
+            "n": 14,
+            "rms_error_ue": 1285.9084844470046,
+            "bias_ue": 1120.7955449628155,
+            "measured_std_ue": 290.3795377938806,
+            "pearson_r": 0.3151972016343405,
+            "slope_pred_vs_meas": 0.714756840489647,
+            "skill": -18.61047460249197
+          }
+        },
+        "zz": {
+          "all": {
+            "n": 204,
+            "rms_error_ue": 1822.2602600953098,
+            "bias_ue": -1334.3555460157606,
+            "measured_std_ue": 1009.984154437352,
+            "pearson_r": 0.3386384738331953,
+            "slope_pred_vs_meas": 0.3822870966097811,
+            "skill": -2.2553050197307405
+          },
+          "near_plate_z<2mm": {
+            "n": 15,
+            "rms_error_ue": 3652.856714436821,
+            "bias_ue": -3019.8001163488557,
+            "measured_std_ue": 1379.5039784888866,
+            "pearson_r": 0.49965417762366476,
+            "slope_pred_vs_meas": 0.8553209217552236,
+            "skill": -6.011635957008592
+          },
+          "away_from_plate": {
+            "n": 189,
+            "rms_error_ue": 1589.0807769858138,
+            "bias_ue": -1200.5901039258324,
+            "measured_std_ue": 973.7212987033307,
+            "pearson_r": 0.36703445156825876,
+            "slope_pred_vs_meas": 0.32815281500265764,
+            "skill": -1.6633154521056923
+          },
+          "model_below_yield": {
+            "n": 14,
+            "rms_error_ue": 791.6764618628456,
+            "bias_ue": -612.7056301419207,
+            "measured_std_ue": 755.7737520486633,
+            "pearson_r": 0.7498311177614603,
+            "slope_pred_vs_meas": 0.5264555605005127,
+            "skill": -0.09726583167144431
+          }
+        }
+      },
+      "d0_offset_test": {
+        "note": "best uniform strain offset (what a d0 error would produce), removed from all components; the bias left over cannot come from d0",
+        "best_common_offset_ue": 20.675232688111247,
+        "stated_total_uncertainty_ue": 100.0,
+        "after_removing_offset": {
+          "yy": {
+            "n": 204,
+            "rms_error_ue": 680.1499611737653,
+            "bias_ue": -201.3804198557315,
+            "measured_std_ue": 535.3038725084737,
+            "pearson_r": 0.6746615934545082,
+            "slope_pred_vs_meas": 1.105100126572449,
+            "skill": -0.6143904687263271
+          },
+          "xx": {
+            "n": 204,
+            "rms_error_ue": 1844.9716662272863,
+            "bias_ue": 1556.4111985596035,
+            "measured_std_ue": 611.1548627015878,
+            "pearson_r": 0.6920521298302467,
+            "slope_pred_vs_meas": 1.4834185347344215,
+            "skill": -8.11332500650524
+          },
+          "zz": {
+            "n": 204,
+            "rms_error_ue": 1837.453711954244,
+            "bias_ue": -1355.0307787038723,
+            "measured_std_ue": 1009.984154437352,
+            "pearson_r": 0.3386384738331954,
+            "slope_pred_vs_meas": 0.38228709660978166,
+            "skill": -2.309814805819695
+          }
+        }
+      },
+      "diagnostic_strain_fit": {
+        "note": "least-squares eps_xy fitted to these strains, only to locate the model error; not used anywhere",
+        "eps_xy_from_strains": -0.0012358046679366533,
+        "eps_xy_from_deflection": -0.00374,
+        "ratio": 0.33042905559803565,
+        "rms_error_ue_after_fit": 697.3564520355924,
+        "eps_z_sensitivity_vs_eps_xy": 7.410950646008366e-16
+      }
+    }
+  },
+  "measurement_floor_AMB2018_neutron_vs_edxrd": {
+    "xx": {
+      "n": 160,
+      "rms_error_ue": 413.24065360485747,
+      "bias_ue": 83.78446984450675,
+      "measured_std_ue": 699.398947277342,
+      "pearson_r": 0.8161926095022001,
+      "slope_pred_vs_meas": 0.6909884418233121,
+      "skill": 0.6508949501437844
+    },
+    "zz": {
+      "n": 160,
+      "rms_error_ue": 1049.6702351326198,
+      "bias_ue": 444.83363585646373,
+      "measured_std_ue": 719.3659138334424,
+      "pearson_r": 0.5281271011655863,
+      "slope_pred_vs_meas": 0.8137853060875002,
+      "skill": -1.129148994052072
+    },
+    "note": "neutron (1.5 mm gauge) vs mean of EDXRD points inside the same 1.5 mm square: how well two NIST techniques agree with each other on the same part; a model cannot be expected to beat it"
+  }
+}

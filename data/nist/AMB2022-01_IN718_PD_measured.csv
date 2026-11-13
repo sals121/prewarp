@@ -1,0 +1,14 @@
+# AM Bench 2022 CHAL-AMB2022-01-PD, part AMB2022-718-AMMT-B7-P2 (IN718, NIST AMMT), as-built.
+# Source: Table 8 of Praniewicz, Fox, Tarr 2023, IMMI 12, doi:10.1007/s40192-023-00310-w (PMC10895932);
+#         rounded values also in AMB2022-01-RS-PD_measurement_results_v1.1.pdf (doi:10.18434/mds2-2711), Table 1.
+# x_stl_mm = ridge centre in AMB2022-01-AMMT-PartCAD.STL frame (taper + attached solid end at x=0..19, free end x=75).
+#   (derived by Claude from the CAD + NIST measurement drawing: every other ridge measured, ridge 1 at taper end.)
+# x_from_free_end_mm = 75 - x_stl_mm  (directly comparable to the 2018 x_mm frame, which is mirrored)
+# deflection = z_cut - z_initial, each ridge measured relative to adjacent build-plate datum targets; U(k=2)=0.0043 mm.
+ridge,x_stl_mm,x_from_free_end_mm,deflection_mm,U_k2_mm
+1,4.5,70.5,-0.0025,0.0043
+2,18.5,56.5,0.0154,0.0043
+3,32.5,42.5,0.1826,0.0043
+4,46.5,28.5,0.5232,0.0043
+5,60.5,14.5,1.0583,0.0043
+6,74.5,0.5,1.8088,0.0043

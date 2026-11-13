@@ -1,0 +1,150 @@
+{
+  "generated": "2026-11-12 22:05",
+  "pitch_mm": 0.5,
+  "AMB2018": {
+    "case": "AM-Bench 2018 \u00b7 IN625 bridge (EOS M270-based CBM)",
+    "process": "195 W, 800 mm/s, 100 \u00b5m hatch, 20 \u00b5m layers, X/Y alternating scan",
+    "elements": 29500,
+    "dof": 109083,
+    "solve_seconds": 25.8,
+    "eps_xy_fit": -0.003739093855390255,
+    "fit_all_points": {
+      "rms_um": 7.761847891443037,
+      "max_abs_um": 11.73678879911244,
+      "tip_error_pct": 0.8985146924840649
+    },
+    "eps_xy_from_tip_only": -0.0037057967273216763,
+    "tip_only_calibration_predicting_other_10": {
+      "rms_um": 9.790967122479524,
+      "max_abs_um": 18.346741413252097,
+      "tip_error_pct": -1.514779921724592
+    },
+    "eps_z_sensitivity_mm_per_unit": 6.41123241782575e-11,
+    "x_mm": [
+      0.5,
+      7.5,
+      14.5,
+      21.5,
+      28.5,
+      35.5,
+      42.5,
+      49.5,
+      56.5,
+      63.5,
+      70.5
+    ],
+    "measured_mm": [
+      1.276,
+      0.997,
+      0.754,
+      0.551,
+      0.387,
+      0.25,
+      0.146,
+      0.065,
+      0.012,
+      0.0,
+      0.003
+    ],
+    "predicted_mm": [
+      1.2874650474760967,
+      0.9907201387785216,
+      0.7422632112008876,
+      0.5469735466485403,
+      0.38492113401941974,
+      0.25586039714652653,
+      0.15089757344266397,
+      0.07372406909477744,
+      0.02224464072579478,
+      0.0018103833083150242,
+      -0.006532518245020413
+    ]
+  },
+  "AMB2022": {
+    "case": "AM-Bench 2022 \u00b7 IN718 bridge (NIST AMMT testbed)",
+    "process": "285 W, 960 mm/s, 110 \u00b5m hatch, 40 \u00b5m layers, X/Y alternating, 14 mm stripes",
+    "elements": 29116,
+    "solve_seconds": 24.9,
+    "blind_transfer_from_2018": {
+      "rms_um": 260.41373368417663,
+      "max_abs_um": 531.2603384587702,
+      "tip_error_pct": -29.370872316384908
+    },
+    "eps_xy_from_tip_only": -0.005293982777388413,
+    "tip_only_calibration_predicting_other_5": {
+      "rms_um": 18.78748358673625,
+      "max_abs_um": 30.00438320415555,
+      "tip_error_pct": -1.4846426942411537
+    },
+    "x_mm": [
+      4.5,
+      18.5,
+      32.5,
+      46.5,
+      60.5,
+      74.5
+    ],
+    "measured_mm": [
+      -0.0025,
+      0.0154,
+      0.1826,
+      0.5232,
+      1.0583,
+      1.8088
+    ],
+    "predicted_tip_calibrated_mm": [
+      -0.009354598695678455,
+      0.031298032201684096,
+      0.21260438320415556,
+      0.5410321512873264,
+      1.0425880263668459,
+      1.8087999999999997
+    ],
+    "predicted_blind_mm": [
+      -0.006607071457060527,
+      0.02210552712618643,
+      0.15016062127422536,
+      0.3821262889421353,
+      0.7363708283567222,
+      1.2775396615412298
+    ]
+  },
+  "ablations_AMB2018": {
+    "pitch 1.0 mm": {
+      "tip_change_pct_vs_reference": -6.628590569444795,
+      "refit": {
+        "rms_um": 7.413617224488553,
+        "max_abs_um": 11.182485294390077,
+        "tip_error_pct": 0.5468509248723415
+      },
+      "seconds": 1.9
+    },
+    "single step (no layer-by-layer)": {
+      "tip_change_pct_vs_reference": -96.13988104414693,
+      "refit": {
+        "rms_um": 219.49084921570568,
+        "max_abs_um": 545.8018409367255,
+        "tip_error_pct": -42.77443894488445
+      },
+      "seconds": 10.5
+    },
+    "6 lumped steps": {
+      "tip_change_pct_vs_reference": -39.32472830589266,
+      "refit": {
+        "rms_um": 22.40289165897023,
+        "max_abs_um": 36.918415114103375,
+        "tip_error_pct": -1.0140633619822406
+      },
+      "seconds": 13.7
+    },
+    "standard hex8 (no incompatible modes)": {
+      "tip_change_pct_vs_reference": 0.06773289496599298,
+      "refit": {
+        "rms_um": 7.5461819537229164,
+        "max_abs_um": 11.200993054877205,
+        "tip_error_pct": 0.839480055459392
+      },
+      "seconds": 25.1
+    }
+  }
+}

@@ -1,0 +1,412 @@
+{
+  "part": "NIST AMB2018-01 IN625 bridge, legs x >= 56 mm left on the plate",
+  "reference_model": "0.5 mm voxels, 0.5 mm activation, isotropic eps_xy = -0.00374",
+  "compensation_iterations": [
+    {
+      "iteration": 0,
+      "max_deviation_mm": 1.3937760662267356,
+      "rms_deviation_mm": 0.5454381004866528
+    },
+    {
+      "iteration": 1,
+      "max_deviation_mm": 0.064251277229338,
+      "rms_deviation_mm": 0.02257407793148694
+    },
+    {
+      "iteration": 2,
+      "max_deviation_mm": 0.005124657472458486,
+      "rms_deviation_mm": 0.0007859879805199049
+    },
+    {
+      "iteration": 3,
+      "max_deviation_mm": 0.0037549904168847526,
+      "rms_deviation_mm": 0.0005681201040809882
+    },
+    {
+      "iteration": 4,
+      "max_deviation_mm": 0.0034967688398426225,
+      "rms_deviation_mm": 0.000527520699316519
+    }
+  ],
+  "reference_verified_after_reslicing": {
+    "max_deviation_mm": 0.02698537012949498,
+    "rms_deviation_mm": 0.0050651452583704085,
+    "layer_mismatch_elements": 1336
+  },
+  "truth_models": [
+    {
+      "truth_model": "reference model (inverse crime)",
+      "kind": "reference",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.00374,
+      "uncompensated": {
+        "max_mm": 1.393776066225144,
+        "rms_mm": 0.5454381004859237,
+        "ridge_max_abs_um": 1286.1690345936788,
+        "ridge_um": [
+          1286.17,
+          988.91,
+          740.41,
+          545.07,
+          382.98,
+          253.88,
+          148.9,
+          71.7,
+          20.21,
+          -0.23,
+          -8.54
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.02698537012949498,
+        "rms_mm": 0.0050651452583704085,
+        "ridge_max_abs_um": 11.725818597328043,
+        "ridge_um": [
+          11.73,
+          9.15,
+          6.64,
+          4.79,
+          2.42,
+          0.59,
+          0.18,
+          0.06,
+          -0.01,
+          -0.0,
+          0.01
+        ]
+      },
+      "reduction_max_pct": 98.06386615587529,
+      "seconds": 27.1,
+      "process_peak_memory_gb": 1.87
+    },
+    {
+      "truth_model": "calibration -5 %",
+      "kind": "calibration error",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.0035529999999999997,
+      "uncompensated": {
+        "max_mm": 1.3240872629138771,
+        "rms_mm": 0.5181661954616393,
+        "ridge_max_abs_um": 1221.8605828640016,
+        "ridge_um": [
+          1221.86,
+          939.46,
+          703.39,
+          517.81,
+          363.83,
+          241.19,
+          141.45,
+          68.11,
+          19.2,
+          -0.22,
+          -8.11
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.062198860867427555,
+        "rms_mm": 0.02403597629369182,
+        "ridge_max_abs_um": 55.05340043974245,
+        "ridge_um": [
+          -55.05,
+          -42.27,
+          -32.01,
+          -23.64,
+          -17.41,
+          -12.51,
+          -7.52,
+          -3.61,
+          -1.03,
+          0.01,
+          0.42
+        ]
+      },
+      "reduction_max_pct": 95.30251044553147,
+      "seconds": 53.2,
+      "process_peak_memory_gb": 1.88
+    },
+    {
+      "truth_model": "calibration +5 %",
+      "kind": "calibration error",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.003927,
+      "uncompensated": {
+        "max_mm": 1.4634648695349282,
+        "rms_mm": 0.5727100055095857,
+        "ridge_max_abs_um": 1350.4774863218684,
+        "ridge_um": [
+          1350.48,
+          1038.35,
+          777.43,
+          572.32,
+          402.13,
+          266.58,
+          156.34,
+          75.28,
+          21.22,
+          -0.24,
+          -8.97
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.08501838548182251,
+        "rms_mm": 0.03235332334924229,
+        "ridge_max_abs_um": 78.50503764889521,
+        "ridge_um": [
+          78.51,
+          60.58,
+          45.29,
+          33.22,
+          22.25,
+          13.69,
+          7.88,
+          3.73,
+          1.0,
+          -0.02,
+          -0.41
+        ]
+      },
+      "reduction_max_pct": 94.19060974734293,
+      "seconds": 53.1,
+      "process_peak_memory_gb": 1.89
+    },
+    {
+      "truth_model": "anisotropic: eps_x +10 %, eps_y -10 %",
+      "kind": "shape",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.0034102733357375846,
+      "uncompensated": {
+        "max_mm": 1.3818172417815786,
+        "rms_mm": 0.5419598579401547,
+        "ridge_max_abs_um": 1276.2492811110524,
+        "ridge_um": [
+          1276.25,
+          981.7,
+          735.54,
+          542.28,
+          381.89,
+          254.15,
+          150.11,
+          73.5,
+          22.16,
+          1.65,
+          -6.7
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.02530440266392726,
+        "rms_mm": 0.0031871642001048968,
+        "ridge_max_abs_um": 4.29530172779143,
+        "ridge_um": [
+          -4.3,
+          -2.31,
+          -0.59,
+          0.28,
+          0.66,
+          1.26,
+          1.52,
+          1.9,
+          1.94,
+          1.87,
+          1.86
+        ]
+      },
+      "reduction_max_pct": 98.16875908775735,
+      "seconds": 51.6,
+      "process_peak_memory_gb": 1.89
+    },
+    {
+      "truth_model": "anisotropic: eps_x -10 %, eps_y +10 %",
+      "kind": "shape",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.004057397862848488,
+      "uncompensated": {
+        "max_mm": 1.3841202358034725,
+        "rms_mm": 0.5413333665908099,
+        "ridge_max_abs_um": 1276.2718389516822,
+        "ridge_um": [
+          1276.27,
+          981.74,
+          735.42,
+          541.52,
+          380.67,
+          252.53,
+          148.53,
+          72.17,
+          21.54,
+          1.59,
+          -6.5
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.029095746576692064,
+        "rms_mm": 0.005088520618860841,
+        "ridge_max_abs_um": 2.8889863722577456,
+        "ridge_um": [
+          -2.89,
+          -1.21,
+          0.08,
+          0.0,
+          -0.2,
+          -0.13,
+          -0.06,
+          0.55,
+          1.3,
+          1.81,
+          2.05
+        ]
+      },
+      "reduction_max_pct": 97.89788879433569,
+      "seconds": 55.1,
+      "process_peak_memory_gb": 1.9
+    },
+    {
+      "truth_model": "activation 2 voxel layers per step (1.0 mm)",
+      "kind": "shape",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.004004255979913823,
+      "uncompensated": {
+        "max_mm": 1.3788468404553667,
+        "rms_mm": 0.5435640306532179,
+        "ridge_max_abs_um": 1274.278361038354,
+        "ridge_um": [
+          1274.28,
+          984.57,
+          738.48,
+          545.05,
+          383.86,
+          255.67,
+          150.67,
+          73.37,
+          21.07,
+          -0.24,
+          -9.01
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.0617811810302922,
+        "rms_mm": 0.017845609650028064,
+        "ridge_max_abs_um": 36.568800898659944,
+        "ridge_um": [
+          -36.57,
+          -22.16,
+          -10.84,
+          -3.5,
+          -0.92,
+          -2.11,
+          1.3,
+          1.61,
+          0.87,
+          -0.01,
+          -0.47
+        ]
+      },
+      "reduction_max_pct": 95.51935869759916,
+      "seconds": 40.0,
+      "process_peak_memory_gb": 1.9
+    },
+    {
+      "truth_model": "activation 4 voxel layers per step (2.0 mm)",
+      "kind": "shape",
+      "pitch_mm": 0.5,
+      "mean_eps_used": -0.006397201215103505,
+      "uncompensated": {
+        "max_mm": 1.4366206588970778,
+        "rms_mm": 0.5768540295724864,
+        "ridge_max_abs_um": 1273.2495087944783,
+        "ridge_um": [
+          1273.25,
+          994.78,
+          751.74,
+          569.32,
+          413.76,
+          291.44,
+          183.4,
+          100.5,
+          33.84,
+          0.16,
+          -14.61
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.2429817306535665,
+        "rms_mm": 0.11045526069345717,
+        "ridge_max_abs_um": 50.79614165111741,
+        "ridge_um": [
+          -37.46,
+          -50.8,
+          -48.06,
+          -30.47,
+          -13.92,
+          3.46,
+          26.36,
+          27.19,
+          13.91,
+          0.52,
+          -6.06
+        ]
+      },
+      "reduction_max_pct": 83.08657688104608,
+      "seconds": 31.1,
+      "process_peak_memory_gb": 1.9
+    },
+    {
+      "truth_model": "finer mesh 0.25 mm (0.5 mm activation)",
+      "kind": "shape",
+      "pitch_mm": 0.25,
+      "mean_eps_used": -0.0036763396105217033,
+      "uncompensated": {
+        "max_mm": 1.3795222767241706,
+        "rms_mm": 0.5369094011443653,
+        "ridge_max_abs_um": 1274.209589337431,
+        "ridge_um": [
+          1274.21,
+          979.68,
+          733.78,
+          539.84,
+          379.08,
+          250.87,
+          146.84,
+          70.41,
+          19.64,
+          -0.32,
+          -8.3
+        ]
+      },
+      "compensated": {
+        "max_mm": 0.1137633575519923,
+        "rms_mm": 0.039873961754808146,
+        "ridge_max_abs_um": 103.58746110650596,
+        "ridge_um": [
+          -103.59,
+          -75.61,
+          -53.28,
+          -37.22,
+          -21.5,
+          -10.6,
+          -5.3,
+          -1.86,
+          -0.37,
+          0.09,
+          0.38
+        ]
+      },
+      "reduction_max_pct": 91.75342366908811,
+      "seconds": 926.6,
+      "process_peak_memory_gb": 19.79
+    }
+  ],
+  "headline": {
+    "uncompensated_max_mm": 1.393776066225144,
+    "worst_case_truth_model": "activation 4 voxel layers per step (2.0 mm)",
+    "worst_case_max_mm": 0.2429817306535665,
+    "worst_case_reduction_pct": 83.08657688104608,
+    "range_max_mm": [
+      0.02530440266392726,
+      0.2429817306535665
+    ],
+    "range_ridge_max_abs_um": [
+      2.8889863722577456,
+      103.58746110650596
+    ]
+  }
+}

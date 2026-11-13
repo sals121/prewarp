@@ -1,0 +1,34 @@
+[project]
+name = "prewarp"
+version = "0.1.0"
+description = "Predict and pre-compensate distortion of metal LPBF/SLM parts: inherent-strain FEM, NIST-validated, with an MCP server and a Claude agent."
+readme = "README.md"
+license = "MIT"
+keywords = ["additive manufacturing", "LPBF", "SLM", "distortion", "FEM", "inherent strain", "MCP", "LLM agent"]
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=2.8.0",
+    "imageio>=2.38.1",
+    "matplotlib>=3.11.2",
+    "mcp>=2.0",
+    "numpy>=2.5.4",
+    "pandas>=3.1.1",
+    "pypardiso>=0.4.7; platform_machine == 'x86_64' or platform_machine == 'AMD64'",
+    "pyvista>=0.49.2",
+    "rtree>=1.4.1",
+    "scipy>=1.18.1",
+    "trimesh>=5.2.1",
+]
+
+[project.scripts]
+prewarp = "prewarp.cli:main"
+prewarp-mcp = "prewarp.mcp_server:main"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]

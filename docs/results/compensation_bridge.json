@@ -1,0 +1,31 @@
+{
+  "history": [
+    {
+      "iteration": 0,
+      "max_deviation_mm": 1.3937760662242347,
+      "rms_deviation_mm": 0.5454381004855319
+    },
+    {
+      "iteration": 1,
+      "max_deviation_mm": 0.06425127722867806,
+      "rms_deviation_mm": 0.022574077931106912
+    },
+    {
+      "iteration": 2,
+      "max_deviation_mm": 0.005124657462724185,
+      "rms_deviation_mm": 0.000785987977635498
+    },
+    {
+      "iteration": 3,
+      "max_deviation_mm": 0.0037549903852875737,
+      "rms_deviation_mm": 0.0005681200943899183
+    }
+  ],
+  "verified_after_reslicing": {
+    "max_deviation_mm": 0.026990837940058913,
+    "rms_deviation_mm": 0.005040609081086594,
+    "layer_mismatch_elements": 1322
+  },
+  "max_offset_mm": 1.4180590584297341,
+  "compensated_stl": "AMB2018_bridge_prewarp_compensated.stl"
+}
