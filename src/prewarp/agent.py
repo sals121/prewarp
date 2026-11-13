@@ -17,6 +17,7 @@ import anthropic
 from anthropic import beta_tool
 
 from . import service
+from .paths import checked_stl_path
 from .grounding import check
 
 MODEL = "claude-opus-5-5"
@@ -61,7 +62,7 @@ def analyze_part(stl_path: str, material: str = "IN718", removal: str = "full") 
         material: Alloy key, e.g. IN718, IN625, Ti6Al4V, 316L, AlSi10Mg.
         removal: "full" if the part is cut off the plate (reported after best-fit alignment), "none" if it stays on the plate.
     """
-    return _record(service.analyze_part(stl_path, material=material, removal=removal))
+    return _record(service.analyze_part(checked_stl_path(stl_path), material=material, removal=removal))
 
 
 @beta_tool
@@ -73,7 +74,7 @@ def compensate_part(stl_path: str, material: str = "IN718", removal: str = "full
         material: Alloy key.
         removal: "full" or "none", as in analyze_part.
     """
-    return _record(service.compensate_part(stl_path, material=material, removal=removal))
+    return _record(service.compensate_part(checked_stl_path(stl_path), material=material, removal=removal))
 
 
 @beta_tool
@@ -84,7 +85,7 @@ def rank_orientations(stl_path: str, material: str = "IN718") -> str:
         stl_path: Path to the part STL in mm.
         material: Alloy key.
     """
-    return _record(service.rank_orientations(stl_path, material=material))
+    return _record(service.rank_orientations(checked_stl_path(stl_path), material=material))
 
 
 @beta_tool

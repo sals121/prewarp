@@ -17,6 +17,7 @@ import numpy as np
 
 from .compensate import DistortionModel, best_fit_rigid, compensate, morph_surface
 from .geometry import load_stl, mesh_from_stl, orient
+from .limits import ResourceLimitError, check_elements, check_grid, check_stl_size
 from .materials import MATERIALS, get_material
 from .simulate import release, simulate_build, summarize
 
@@ -27,6 +28,19 @@ def auto_pitch(volume_mm3: float, target: int = TARGET_ELEMENTS) -> float:
     """Voxel size that gives roughly ``target`` elements (laptop-friendly)."""
     p = (volume_mm3 / target) ** (1 / 3)
     return float(max(0.25, round(p * 20) / 20))
+
+
+def _load_part(stl_path: str):
+    check_stl_size(stl_path)
+    return load_stl(stl_path)
+
+
+def _mesh(surface, pitch: float):
+    """Voxelise within the configured memory limits (checked before allocating)."""
+    check_grid(surface.bounds, pitch)
+    mesh, _ = mesh_from_stl(surface, pitch)
+    check_elements(mesh.n_elems, pitch)
+    return mesh
 
 
 def _out_dir(output_dir: str | None, stem: str) -> Path:
@@ -79,10 +93,10 @@ def analyze_part(
             the plate (as-built distortion only).
     """
     t0 = time.perf_counter()
-    surface = load_stl(stl_path)
+    surface = _load_part(stl_path)
     pitch = pitch_mm or auto_pitch(abs(surface.volume))
     mat, exy, ez, warnings = _model_params(material, eps_xy, eps_z)
-    mesh, _ = mesh_from_stl(surface, pitch)
+    mesh = _mesh(surface, pitch)
     basis = simulate_build(mesh, mat.E, mat.nu, n_steps=n_steps)
     u_built = basis.combine(exy, ez)
     stress = basis.stress(exy, ez)
@@ -156,10 +170,10 @@ def compensate_part(
 ) -> dict:
     """Write a pre-deformed STL that prints (and springs back) to the nominal shape."""
     t0 = time.perf_counter()
-    surface = load_stl(stl_path)
+    surface = _load_part(stl_path)
     pitch = pitch_mm or auto_pitch(abs(surface.volume))
     mat, exy, ez, warnings = _model_params(material, eps_xy, eps_z)
-    mesh, _ = mesh_from_stl(surface, pitch)
+    mesh = _mesh(surface, pitch)
     if removal not in ("full", "none"):
         raise ValueError("removal must be 'full' or 'none'")
     model = DistortionModel(mat.E, mat.nu, exy, ez, n_steps=n_steps, attached=None)
@@ -216,16 +230,18 @@ def rank_orientations(
     build height (time proxy) and plate contact area (support/removal cost).
     """
     t0 = time.perf_counter()
-    surface = load_stl(stl_path)
+    surface = _load_part(stl_path)
     pitch = pitch_mm or max(auto_pitch(abs(surface.volume), 12_000), 0.5)
     mat, exy, ez, warnings = _model_params(material, None, None)
     rows = []
     for rx, ry in orientations or DEFAULT_ORIENTATIONS:
         part = orient(surface, rx, ry)
         try:
-            mesh, _ = mesh_from_stl(part, pitch)
+            mesh = _mesh(part, pitch)
             # Same lumped-layer thickness (2 voxels) for every orientation: fair comparison.
             basis = simulate_build(mesh, mat.E, mat.nu, n_steps=max(1, mesh.shape[2] // 2))
+        except ResourceLimitError:
+            raise
         except ValueError as err:  # floating islands -> needs supports
             rows.append({"rx_deg": rx, "ry_deg": ry, "feasible_without_supports": False, "reason": str(err)})
             continue

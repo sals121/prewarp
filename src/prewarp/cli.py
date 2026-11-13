@@ -46,6 +46,15 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("mcp", help="run the MCP server (stdio)")
 
     a = ap.parse_args(argv)
+    from .limits import ResourceLimitError
+
+    try:
+        _run(a)
+    except ResourceLimitError as err:
+        ap.exit(2, f"prewarp: {err}\n")
+
+
+def _run(a) -> None:
     from . import service
 
     if a.cmd == "analyze":

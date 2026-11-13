@@ -207,7 +207,7 @@ uv sync
 uv run prewarp analyze data/nist/AMB2022-01-AMMT-PartCAD.STL -m IN718
 uv run prewarp orient my_bracket.stl -m Ti6Al4V      # rank build orientations
 uv run prewarp compensate my_bracket.stl -m Ti6Al4V
-uv run pytest -q                                      # 30 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
+uv run pytest -q                                      # 59 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
 ```
 
 ## LLM layer: an engineer you can talk to, that can't make numbers up
@@ -215,14 +215,30 @@ uv run pytest -q                                      # 30 tests: patch test, be
 ### MCP server
 
 ```bash
-claude mcp add prewarp -- uv --directory /path/to/prewarp run prewarp-mcp
+claude mcp add prewarp -e PREWARP_ALLOWED_DIRS=/path/to/parts -- uv --directory /path/to/prewarp run prewarp-mcp
 ```
 
 or in Claude Desktop's `claude_desktop_config.json`:
 
 ```json
-{ "mcpServers": { "prewarp": { "command": "uv", "args": ["--directory", "/path/to/prewarp", "run", "prewarp-mcp"] } } }
+{ "mcpServers": { "prewarp": { "command": "uv", "args": ["--directory", "/path/to/prewarp", "run", "prewarp-mcp"],
+                              "env": { "PREWARP_ALLOWED_DIRS": "/path/to/parts" } } } }
 ```
+
+The model can only open `.stl` files inside `PREWARP_ALLOWED_DIRS` (default: the working
+directory). Remote and UNC paths are rejected, so a prompt-injected request cannot read other
+files or make the machine authenticate to a remote share. Use `os.pathsep` to list several
+folders. The path is checked as text first (no UNC, `\?\` or `\.\` prefixes, drive-relative
+paths, alternate data streams or device names such as `NUL`), then resolved through symlinks
+and junctions and compared folder by folder, case-insensitively on Windows. The CLI is not
+restricted.
+
+Every entry point (CLI, MCP, agent) also enforces resource limits before loading, voxelising
+and simulating, because solver memory grows faster than linearly with the element count
+(about 20 GB at 234k elements): `PREWARP_MAX_STL_MB` (default 100), `PREWARP_MAX_ELEMENTS`
+(default 100 000, roughly 8 GB) and `PREWARP_MAX_GRID_CELLS` (default 20 × the element
+limit, checked before the voxel grid is allocated). A part over a limit fails with an error
+that names the variable to raise.
 
 Tools: `analyze_part`, `compensate_part`, `rank_orientations`, `list_materials`, `nist_validation`.
 Then just ask: *"This IN718 bracket warps at the tip. Which orientation is best, and give me a

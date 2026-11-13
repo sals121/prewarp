@@ -13,6 +13,7 @@ from __future__ import annotations
 from mcp.server.mcpserver import MCPServer
 
 from . import service
+from .paths import checked_stl_path
 
 INSTRUCTIONS = """\
 PreWarp predicts distortion of metal laser powder-bed fusion (LPBF/SLM) parts with an
@@ -40,7 +41,7 @@ def analyze_part(
     """Predict distortion and residual stress of an STL printed by LPBF/SLM.
 
     Args:
-        stl_path: absolute path to the part STL (mm, z = build direction).
+        stl_path: path to the part STL (mm, z = build direction), inside PREWARP_ALLOWED_DIRS.
         material: alloy key from list_materials (e.g. IN718, IN625, Ti6Al4V, 316L, AlSi10Mg).
         removal: "full" = cut off the plate, deviation after best-fit alignment;
             "none" = still on the plate (as-built).
@@ -48,7 +49,7 @@ def analyze_part(
     Returns max/RMS displacement, peak and p95 von Mises stress, a render path and warnings.
     Takes ~10-120 s depending on part size.
     """
-    return service.analyze_part(stl_path, material=material, removal=removal, pitch_mm=pitch_mm)
+    return service.analyze_part(checked_stl_path(stl_path), material=material, removal=removal, pitch_mm=pitch_mm)
 
 
 @mcp.tool()
@@ -65,7 +66,7 @@ def compensate_part(
     path of the compensated STL. Slower than analyze_part (one solve per iteration).
     """
     return service.compensate_part(
-        stl_path, material=material, removal=removal, pitch_mm=pitch_mm, iterations=iterations
+        checked_stl_path(stl_path), material=material, removal=removal, pitch_mm=pitch_mm, iterations=iterations
     )
 
 
@@ -74,7 +75,7 @@ def rank_orientations(stl_path: str, material: str = "IN718", orientations: list
     """Screen build orientations [[rx_deg, ry_deg], ...] on a coarse mesh and rank them by
     predicted distortion; also reports build height and plate contact area. Orientations that
     would need supports (floating regions) are listed as infeasible."""
-    return service.rank_orientations(stl_path, material=material, orientations=orientations)
+    return service.rank_orientations(checked_stl_path(stl_path), material=material, orientations=orientations)
 
 
 @mcp.tool()
