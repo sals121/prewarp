@@ -207,7 +207,7 @@ uv sync
 uv run prewarp analyze data/nist/AMB2022-01-AMMT-PartCAD.STL -m IN718
 uv run prewarp orient my_bracket.stl -m Ti6Al4V      # rank build orientations
 uv run prewarp compensate my_bracket.stl -m Ti6Al4V
-uv run pytest -q                                      # 66 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
+uv run pytest -q                                      # 67 tests: patch test, beam theory, physics, compensation, residual strain, grounding, MCP end-to-end
 ```
 
 ## LLM layer: an engineer you can talk to, that can't make numbers up

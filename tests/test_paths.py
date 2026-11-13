@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 import trimesh
 
-from prewarp import limits, service
+from prewarp import limits, paths, service
 from prewarp.paths import checked_stl_path, is_within
 
 windows_only = pytest.mark.skipif(sys.platform != "win32", reason="Windows path semantics")
@@ -176,6 +176,10 @@ def test_paths_outside_the_allowed_dirs_are_never_resolved(parts, monkeypatch):
     outside = parts.parent / "elsewhere"
     outside.mkdir()
     trimesh.creation.box(extents=(1, 1, 1)).export(outside / "x.stl")
+    # Resolving the allowed dirs themselves is trusted (user configuration); on POSIX
+    # realpath lstat()s their parents, so resolve them before the probes go in.
+    roots = paths.allowed_dirs()
+    monkeypatch.setattr(paths, "allowed_dirs", lambda: roots)
     touched = _forbid_fs_outside(monkeypatch, parts)
     for bad in [outside / "x.stl", parts / ".." / "elsewhere" / "x.stl"]:
         with pytest.raises(ValueError, match="outside the allowed"):
@@ -187,12 +191,17 @@ def test_paths_outside_the_allowed_dirs_are_never_resolved(parts, monkeypatch):
     assert touched == []
 
 
-def test_link_to_a_network_path_is_refused_without_following(parts, monkeypatch):
+@pytest.mark.parametrize("target", [
+    # On POSIX a backslash is part of a local file name, so this is not a network path there.
+    pytest.param(r"\\evil-host\share", marks=windows_only, id="unc-backslash"),
+    pytest.param("//evil-host/share", id="unc-slash"),
+])
+def test_link_to_a_network_path_is_refused_without_following(target, parts, monkeypatch):
     (parts / "net").mkdir()
     link = str(parts / "net")
     real_islink = os.path.islink
     monkeypatch.setattr(os.path, "islink", lambda p: os.fspath(p) == link or real_islink(p))
-    monkeypatch.setattr(os, "readlink", lambda p: r"\\evil-host\share")  # UNC
+    monkeypatch.setattr(os, "readlink", lambda p: target)
     followed = []
     monkeypatch.setattr(os.path, "lexists", lambda p: followed.append(p) or True)
     with pytest.raises(ValueError, match="links to .*UNC"):
