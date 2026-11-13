@@ -295,7 +295,44 @@ other points held out. Two studies separate the two things a "mesh" changes here
 | AMB2018 · A | 1.0 / 0.5 / 0.25 mm | −209.5 / −199.5 / −199.1 mm | 6.09 / 6.40 / 6.41 ×10⁻³ | 22.9 / 27.3 / 27.9 µm |
 | AMB2022 · A | 1.0 / 0.5 / 0.25 mm | −209.3 / −198.6 / −198.2 mm | 8.64 / 9.11 / 9.13 ×10⁻³ | 46.7 / 51.8 / 52.9 µm |
 | AMB2018 · B | 1.0 / 0.5 / 0.25 mm | −317.6 / −344.3 / −359.9 mm | 4.02 / 3.71 / 3.55 ×10⁻³ | 8.7 / 9.8 / 10.4 µm |
-| AMB2022 · B | 1.0 / 0.5 mm | −304.1 / −341.7 mm | 5.95 / 5.29 ×10⁻³ | 22.7 / 18.8 µm |
+| AMB2022 · B | 1.0 / 0.5 / 0.25 mm | −304.1 / −341.7 / −356.6 mm | 5.95 / 5.29 / 5.07 ×10⁻³ | 22.7 / 18.8 / 17.6 µm |
+
+**The 0.5 mm headline is converged.** Refining the production setting (study B) from 0.5 to
+0.25 mm moves the AMB2022 held-out RMS from 18.8 to 17.6 µm (−1.1 µm) and the AMB2018 one
+from 9.8 to 10.4 µm (+0.6 µm); no recalibrated prediction point moves by more than 2.7 µm.
+The headline accuracy holds to about 1 µm at twice the resolution.
+
+**How this table relates to the headline accuracy.** Every row uses the same protocol as the
+headline: ε* calibrated on the tip point only, the same NIST points held out (10 on AMB2018,
+5 on AMB2022) and the same ridge probe. The headline numbers *are* the study B rows at 0.5 mm:
+9.8 µm and 18.8 µm, with the same ε* to 12 digits. **Study A is not comparable with the
+headline**: it lumps four 0.5 mm voxel layers into each 2 mm activation step, a deliberately
+cruder physics model. Its 52.9 µm at 0.25 mm measures that model, not a finer version of the
+headline.
+
+**Why the study A error rises as the mesh is refined (46.7 → 51.8 → 52.9 µm on AMB2022).**
+Same protocol and the same activation thickness, so this is a fair question. It is the mesh
+error going away and revealing the error of the 2 mm model, not divergence:
+
+- The converged residual is systematic. Both bridges are over-predicted mid-span (+85 µm at
+  x = 32.5 mm on AMB2022, +46 µm at x = 35.5 mm on AMB2018) with the shape flattened toward
+  the tip. Thick activation steps distribute the bending wrongly along the bridge.
+- At 1 mm voxels part of this is cancelled by discretisation error of the opposite sign
+  (+77 instead of +85 µm at the worst point).
+- The changes shrink geometrically: 5.1 then 1.1 µm in RMS (ratio ≈ 4.6, about second order
+  for hex8), so the RMS extrapolates to about 53 µm. On both bridges no point moves by more
+  than 9.4 µm from 1.0 to 0.5 mm, or 2.0 µm from 0.5 to 0.25 mm.
+- With 0.5 mm activation (study B) the same points stay within 30 µm (AMB2022) and 18 µm
+  (AMB2018), and the AMB2022 mid-span over-prediction drops from +83 to +30 µm.
+
+**Study B also rises slightly on AMB2018 (8.7 → 9.8 → 10.4 µm).** There the activation layer
+thins with the mesh, so the physics changes too. The residual shifts smoothly: at x = 7.5 mm,
+near the tip, it goes −9.0 → −15.1 → −17.1 µm, steps of 6.1 then 2.0 µm. Extrapolating the
+RMS trend gives roughly 11 µm in the limit, against the 9.8 µm headline at 0.5 mm. That is a
+real, small sensitivity to the activation thickness, and it is disclosed here rather than
+absorbed into the headline. On AMB2022 the same study moves the other way, 22.7 → 18.8 →
+17.6 µm, so the 0.5 mm headlines are neither flattered nor penalised by more than about 1 µm
+at 0.25 mm.
 
 What it shows:
 
@@ -303,16 +340,16 @@ What it shows:
   0.25 mm voxels changes the tip response by 0.2 % on both bridges.
 - **In production (B) the calibrated *prediction* converges, the calibrated ε\* does not have
   to.** ε\* is an effective parameter tied to the activation thickness, as in every
-  inherent-strain code (real layers are 20–40 µm). It moves 4 % from 0.5 to 0.25 mm, while the
-  recalibrated deflection curve of AMB2018 moves at most 2.4 µm (6.1 µm from 1.0 to 0.5 mm).
+  inherent-strain code (real layers are 20–40 µm). It moves about 4 % from 0.5 to 0.25 mm on both bridges,
+  while the recalibrated deflection curve moves at most 2.4 µm (AMB2018) and 2.7 µm (AMB2022),
+  against 6.1 and 8.6 µm from 1.0 to 0.5 mm.
 - **Thin activation layers are physics, not a numerical detail.** At a converged mesh, 2 mm
-  layers fit the measured shape 2.7–2.8× worse than 0.25–0.5 mm layers (27.9 vs 10.4 µm RMS on
-  AMB2018, 52.9 vs 18.8 µm on AMB2022).
+  layers fit the measured shape 2.7–3.0× worse than 0.25 mm layers (27.9 vs 10.4 µm RMS on
+  AMB2018, 52.9 vs 17.6 µm on AMB2022).
 - The 2 mm voxel row is in the JSON but not in the table. With the legs a few voxels thick its
   unit response is about 2× off (−392 to −433 mm), and its low held-out RMS (12–13 µm) is fortuitous.
-- **Pending:** AMB2022 study B at 0.25 mm. It needs about 20 GB of RAM at peak and was stopped
-  by the OS on the 64 GB development machine with other applications open. It resumes with
-  `uv run python scripts/mesh_convergence.py --case AMB2022 --study B`.
+- The finest production run, AMB2022 at 0.25 mm (234k elements, 787k DOF, 50 activation
+  steps), took 12 min with a 19.2 GB memory peak.
 
 [`scripts/mesh_convergence.py`](scripts/mesh_convergence.py) reproduces this (resumable).
 Results are in [`docs/results/mesh_convergence.json`](docs/results/mesh_convergence.json).
