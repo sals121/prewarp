@@ -1,6 +1,6 @@
 # PreWarp
 
-**Predict how a metal 3D-printed (LPBF / SLM) part will warp, then pre-warp the CAD so it prints true.**
+**Predict how a metal 3D-printed (LPBF / SLM) part will warp, then pre-warp the CAD so it should print true.**
 An inherent-strain finite-element engine, validated against NIST AM-Bench measurements, with
 an MCP server and a Claude agent on top.
 
@@ -9,7 +9,7 @@ an MCP server and a Claude agent on top.
 | | |
 |---|---|
 | **Accuracy** | Calibrated on **one** measured point, predicts the other 10 points of the NIST AMB2018-01 IN625 bridge with **9.8 µm RMS** (deflection up to 1.276 mm), and the 5 held-out ridges of the AMB2022-01 IN718 bridge with **18.8 µm RMS** (up to 1.809 mm). |
-| **Compensation** | Writes a pre-deformed STL. On the NIST bridge (max distortion 1.39 mm), printing the compensated STL with a ±5 % calibration error leaves 0.06–0.09 mm (**−94 %**). Across model assumptions it is **−83 % to −98 %**: the compensated STL is judged by seven truth models that differ from the one that produced it. |
+| **Compensation** | Writes a pre-deformed STL. On the NIST bridge (max distortion 1.39 mm), printing the compensated STL with a ±5 % calibration error leaves 0.06–0.09 mm (**−94 %**). Across model assumptions it is **−83 % to −98 %**: the compensated STL is judged by seven perturbed versions of the same solver, each recalibrated on the same NIST data. Not an independent solver, and nothing compensated has been printed yet. |
 | **Speed** | ~25 s for the full layer-by-layer build and plate-cut simulation (110k DOF) on a consumer PC. |
 | **LLM layer** | MCP server (works in Claude Desktop and Claude Code) + a Claude agent whose answers pass a **numeric grounding check**: every number must trace back to solver output. |
 
@@ -137,7 +137,7 @@ original one, so one correction is not enough:
 | 1 | 0.064 mm | 0.023 mm |
 | 2 | 0.005 mm | 0.8 µm |
 | 3 | 0.004 mm | 0.6 µm |
-| **Independent check**: final STL re-sliced and re-simulated from scratch | **0.027 mm** | **5 µm** |
+| **Re-slice check**: final STL re-sliced and re-simulated from scratch | **0.027 mm** | **5 µm** |
 
 Details that matter here:
 
@@ -146,16 +146,17 @@ Details that matter here:
   Ignoring this leaves 0.084 mm of error on this part.
 - **Layer assignment is discrete** (one activation layer = 0.5 mm). Re-assigning it every
   iteration made rows of elements jump between layers and the iteration stalled at 0.14 mm.
-  So it is assigned on the first compensated shape and frozen. The independent re-slice check
+  So it is assigned on the first compensated shape and frozen. The re-slice check
   above shows what that costs: 3 µm becomes 27 µm.
 - **No printing on powder.** At voxel level, a re-sliced 45° down-skin can end up touching
   finished material only along an edge. That acts as a hinge and gave a spurious 0.33 mm spike.
   Such patches are deferred to the next layer, as a real machine would.
-### How good is it when the model is wrong? (no "inverse crime")
+### How good is it when the model is wrong? (sensitivity test)
 
 Checking a compensation with the model that produced it only shows that the iteration
 converged. That is the 0.027 mm above. Here the compensated STL is also "printed" by seven
-truth models that differ from it. The shape-changing ones are recalibrated on the same NIST tip measurement, so
+perturbed versions of the same solver. They test its own assumptions, not its physics: an
+independent solver and a real print are the stronger tests. The shape-changing ones are recalibrated on the same NIST tip measurement, so
 each is as consistent with the data as the reference model.
 
 ![Compensated STL printed by different truth models](docs/img/compensation_robustness.png)

@@ -9,7 +9,7 @@ in `scripts/` and can be regenerated.
 | `mesh_convergence.json` | `mesh_convergence.py` | Same calibration protocol at voxel pitch 2.0 / 1.0 / 0.5 / 0.25 mm, two studies (below). |
 | `residual_strain.json` | `validate_residual_strain.py` | Elastic strain vs NIST diffraction data, deflection calibration not refitted. |
 | `compensation_bridge.json` | `make_figures.py` | Compensation iterations on the AMB2018 bridge, plus the re-sliced independent check. |
-| `compensation_robustness.json`, `compensation_robustness_rows.json` | `compensation_robustness.py` | The compensated STL "printed" by seven truth models that differ from the reference. |
+| `compensation_robustness.json`, `compensation_robustness_rows.json` | `compensation_robustness.py` | The compensated STL "printed" by seven perturbed versions of the same solver (sensitivity test). |
 
 ## Comparing `mesh_convergence.json` with the headline
 

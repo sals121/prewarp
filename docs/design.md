@@ -1,6 +1,6 @@
 # PreWarp — design
 
-*Predict how a metal LPBF/SLM part will warp, then pre-warp the CAD so it prints true.*
+*Predict how a metal LPBF/SLM part will warp, then pre-warp the CAD so it should print true.*
 
 ## Why this exists
 
