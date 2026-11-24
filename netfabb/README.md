@@ -68,6 +68,10 @@ deviation from the CAD, and the residual on the ridge tops that NIST measured.
 | 0.32 mm | 1.447 → 0.061 mm | **−95.8 %** | 1345 → 20 µm (−98.5 %) |
 | 0.40 mm | 1.494 → 0.139 mm | **−90.7 %** | 1371 → 92 µm (−93.3 %) |
 
+Deviations here are from the CAD, so they include what the part had already moved before the cut:
+the uncompensated ridge tip is 1.345 mm from the CAD, of which 1.275 mm is the cut deflection that NIST
+measured and that the calibration targets.
+
 Without the datum alignment (raw Netfabb displacements) the reductions are −95.1 % (0.32 mm) and
 −87.9 % (0.4 mm).
 
