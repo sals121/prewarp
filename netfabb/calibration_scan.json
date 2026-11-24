@@ -1,0 +1,82 @@
+{
+ "nist_tip_mm": 1.276,
+ "rows": [
+  {
+   "tag": "nom_s025",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.25,
+   "tip_mm": 0.5914,
+   "heldout_rms_um": 250.1
+  },
+  {
+   "tag": "nom_s03",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.3,
+   "tip_mm": 0.7457,
+   "heldout_rms_um": 196.2
+  },
+  {
+   "tag": "nom_s0487",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.487,
+   "tip_mm": 1.2831,
+   "heldout_rms_um": 9.0
+  },
+  {
+   "tag": "nom_s05",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.5,
+   "tip_mm": 1.311,
+   "heldout_rms_um": 7.7
+  },
+  {
+   "tag": "nom_s07",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.7,
+   "tip_mm": 1.4304,
+   "heldout_rms_um": 45.3
+  },
+  {
+   "tag": "nom_cal",
+   "mesh_mm": 0.4,
+   "prm_scale": 0.9164,
+   "tip_mm": 1.5013,
+   "heldout_rms_um": 69.6
+  },
+  {
+   "tag": "nom_p20",
+   "mesh_mm": 0.4,
+   "prm_scale": 1.0,
+   "tip_mm": 1.5323,
+   "heldout_rms_um": 80.4
+  },
+  {
+   "tag": "nom_m16s040",
+   "mesh_mm": 0.32,
+   "prm_scale": 0.4,
+   "tip_mm": 1.2619,
+   "heldout_rms_um": 16.6
+  },
+  {
+   "tag": "nom_m16cal",
+   "mesh_mm": 0.32,
+   "prm_scale": 0.404,
+   "tip_mm": 1.2754,
+   "heldout_rms_um": 12.9
+  },
+  {
+   "tag": "nom_m16s043",
+   "mesh_mm": 0.32,
+   "prm_scale": 0.43,
+   "tip_mm": 1.3612,
+   "heldout_rms_um": 24.0
+  },
+  {
+   "tag": "nom_m16",
+   "mesh_mm": 0.32,
+   "prm_scale": 0.487,
+   "tip_mm": 1.5331,
+   "heldout_rms_um": 84.2
+  }
+ ]
+}

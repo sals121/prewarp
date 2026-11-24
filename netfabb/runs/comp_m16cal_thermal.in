@@ -1,0 +1,114 @@
+*TITLE
+PreWarp cross-check: NIST AMB2018-01 IN625 bridge
+*PBDL
+4
+*RCTR
+20, 0
+*CAS1
+*PBPF
+"EOS_M290_Inc625_20um_s0404.prm"
+*STLFILE
+"bridge_prewarp_comp.stl"
+*STLM
+1 1 1 1
+
+*SBDM
+-5.000000, 76.333333, -5.0, 10.0
+*DDM!
+0, -12.7
+*MNLR
+3
+*PBPA
+16
+*PBLR
+1
+*ADAP
+6
+*TRANSIENT TIMING CONTROL
+0.000000e+00, 1.000000e+300, 1.000000e-01, 5.000000e+04, 1.000000e-02, 2.500000e+04, 10, 99999
+*ANTP
+2
+*BINARY
+*CONV
+2.5e-05, 200.000000
+*AMBIENT TEMPERATURE
+25
+*PBSH
+35
+*FINT
+25
+*MATERIAL PROPERTIES
+*MATID
+1
+*PBSN
+3
+*MATERIAL PROPERTIES
+*MATID
+3
+# Inconel 625
+*MLTT
+#Units: [degC]
+1295
+*CONDUCTIVITY
+# Units: [W/(mm-degC)], [degC]
+10.0e-3, 25
+12.5e-3, 200
+14.0e-3, 300
+15.0e-3, 400
+16.0e-3, 500
+18.0e-3, 600
+22.0e-3, 800
+24.0e-3, 900
+25.0e-3, 1000
+25.5e-3, 1200                                       
+*DENSITY
+# Units: [kg/(mm^3)]
+8.44E-06
+*SPECIFIC HEAT
+# Units: [J/(kg-degC)], [degC]
+405, 25
+460, 200
+480, 300
+500, 400
+525, 500
+550, 600
+580, 700
+600, 800
+630, 900
+650, 1000
+680, 1100
+*EMISSIVITY
+0.43, 25
+*LATENT HEAT
+287e3, 1195, 1475
+*ELASTIC
+    .150e+06,    .278,     24.4
+    .114e+06,    .305,    537.8
+    .59e+05,     .34,    815.6
+    .42e+05,     .34,    982.2
+    .32e+04,     .34,    1093.3
+*EXPANSION
+# Reference temperature
+# Units:  [degC]
+20.,
+# thermal expansion coefficient, temperature
+# Units:  [m/(m-degC)], [degC]
+.128e-04,     20.
+.128e-04,     93.
+.131e-04,    204.
+.133e-04,    316.
+.137e-04,    427.
+.140e-04,    538.
+.148e-04,    649.
+.153e-04,    760.
+.158e-04,    871.
+.162e-04,    927.
+*PLASTIC
+2,
+6.04E+02, 0., 9.11E+02, 0.050,  24.4
+5.32E+02, 0., 7.64E+02, 0.035, 537.8
+2.60E+02, 0., 2.79E+02, 0.058, 815.6
+1.05E+02, 0., 1.14E+02, 0.045, 982.2
+0.57E+02, 0., 0.62E+02, 0.039, 1093.3
+*ENSIGHT GOLD OUTPUT
+*END
