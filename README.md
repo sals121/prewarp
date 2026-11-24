@@ -10,6 +10,7 @@ an MCP server and a Claude agent on top.
 |---|---|
 | **Accuracy** | Calibrated on **one** measured point, predicts the other 10 points of the NIST AMB2018-01 IN625 bridge with **9.8 µm RMS** (deflection up to 1.276 mm), and the 5 held-out ridges of the AMB2022-01 IN718 bridge with **18.8 µm RMS** (up to 1.809 mm). |
 | **Compensation** | Writes a pre-deformed STL. On the NIST bridge (max distortion 1.39 mm), printing the compensated STL with a ±5 % calibration error leaves 0.06–0.09 mm (**−94 %**). Across model assumptions it is **−83 % to −98 %**: the compensated STL is judged by seven perturbed versions of the same solver, each recalibrated on the same NIST data. Not an independent solver, and nothing compensated has been printed yet. |
+| **Independent check** | [Autodesk Netfabb](netfabb/) (thermo-mechanical, with plasticity), calibrated the same way on the NIST tip, predicts the bridge within **8–13 µm RMS of PreWarp** and judges PreWarp's compensated STL at **−91 % to −96 %** (simulated, two meshes). |
 | **Speed** | ~25 s for the full layer-by-layer build and plate-cut simulation (110k DOF) on a consumer PC. |
 | **LLM layer** | MCP server (works in Claude Desktop and Claude Code) + a Claude agent whose answers pass a **numeric grounding check**: every number must trace back to solver output. |
 
